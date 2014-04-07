@@ -5,14 +5,17 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.anddev.andengine.engine.Engine;
-import org.anddev.andengine.engine.camera.Camera;
-import org.anddev.andengine.entity.IEntity;
-import org.anddev.andengine.entity.IEntity.IEntityMatcher;
-import org.anddev.andengine.input.touch.TouchEvent;
-import org.anddev.andengine.input.touch.controller.ITouchController;
-import org.anddev.andengine.ui.activity.BaseGameActivity;
-import org.anddev.andengine.util.constants.Constants;
+import org.andengine.engine.Engine;
+import org.andengine.engine.camera.Camera;
+import org.andengine.entity.IEntity;
+import org.andengine.entity.IEntityMatcher;
+import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.ButtonSprite.State;
+import org.andengine.input.touch.TouchEvent;
+import org.andengine.input.touch.controller.ITouchController;
+import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.util.Constants;
+import org.andengine.util.color.Color;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -230,6 +233,74 @@ public class AndEngineSolo extends Solo {
 		Assert.assertEquals(pExpectedScaleCenterY, this.getEntityScaleCenterY(pClass, pTag), pDelta);
 	}
 
+	public void assertEntitySkewed(final Object pTag) {
+		Assert.assertTrue(this.isEntitySkewed(pTag));
+	}
+
+	public void assertEntitySkewed(final Class<? extends IEntity> pClass, final Object pTag) {
+		Assert.assertTrue(this.isEntitySkewed(pClass, pTag));
+	}
+
+	public void assertEntityNotSkewed(final Object pTag) {
+		Assert.assertFalse(this.isEntitySkewed(pTag));
+	}
+
+	public void assertEntityNotSkewed(final Class<? extends IEntity> pClass, final Object pTag) {
+		Assert.assertFalse(this.isEntitySkewed(pClass, pTag));
+	}
+
+	public void assertEntitySkewX(final float pExpectedSkewX, final Object pTag) {
+		Assert.assertEquals(pExpectedSkewX, this.getEntitySkewX(pTag));
+	}
+
+	public void assertEntitySkewX(final float pExpectedSkewX, final Object pTag, final float pDelta) {
+		Assert.assertEquals(pExpectedSkewX, this.getEntitySkewX(pTag), pDelta);
+	}
+
+	public void assertEntitySkewX(final float pExpectedSkewX, final Class<? extends IEntity> pClass, final Object pTag) {
+		Assert.assertEquals(pExpectedSkewX, this.getEntitySkewX(pClass, pTag));
+	}
+
+	public void assertEntitySkewX(final float pExpectedSkewX, final Class<? extends IEntity> pClass, final Object pTag, final float pDelta) {
+		Assert.assertEquals(pExpectedSkewX, this.getEntitySkewX(pClass, pTag), pDelta);
+	}
+
+	public void assertEntitySkewY(final float pExpectedSkewY, final Object pTag) {
+		Assert.assertEquals(pExpectedSkewY, this.getEntitySkewY(pTag));
+	}
+
+	public void assertEntitySkewY(final float pExpectedSkewY, final Object pTag, final float pDelta) {
+		Assert.assertEquals(pExpectedSkewY, this.getEntitySkewY(pTag), pDelta);
+	}
+
+	public void assertEntitySkewY(final float pExpectedSkewY, final Class<? extends IEntity> pClass, final Object pTag) {
+		Assert.assertEquals(pExpectedSkewY, this.getEntitySkewY(pClass, pTag));
+	}
+
+	public void assertEntitySkewY(final float pExpectedSkewY, final Class<? extends IEntity> pClass, final Object pTag, final float pDelta) {
+		Assert.assertEquals(pExpectedSkewY, this.getEntitySkewY(pClass, pTag), pDelta);
+	}
+
+	public void assertEntitySkewCenter(final float pExpectedSkewCenterX, final float pExpectedSkewCenterY, final Object pTag) {
+		Assert.assertEquals(pExpectedSkewCenterX, this.getEntitySkewCenterX(pTag));
+		Assert.assertEquals(pExpectedSkewCenterY, this.getEntitySkewCenterY(pTag));
+	}
+
+	public void assertEntitySkewCenter(final float pExpectedSkewCenterX, final float pExpectedSkewCenterY, final Object pTag, final float pDelta) {
+		Assert.assertEquals(pExpectedSkewCenterX, this.getEntitySkewCenterX(pTag), pDelta);
+		Assert.assertEquals(pExpectedSkewCenterY, this.getEntitySkewCenterY(pTag), pDelta);
+	}
+
+	public void assertEntitySkewCenter(final float pExpectedSkewCenterX, final float pExpectedSkewCenterY, final Class<? extends IEntity> pClass, final Object pTag) {
+		Assert.assertEquals(pExpectedSkewCenterX, this.getEntitySkewCenterX(pClass, pTag));
+		Assert.assertEquals(pExpectedSkewCenterY, this.getEntitySkewCenterY(pClass, pTag));
+	}
+
+	public void assertEntitySkewCenter(final float pExpectedSkewCenterX, final float pExpectedSkewCenterY, final Class<? extends IEntity> pClass, final Object pTag, final float pDelta) {
+		Assert.assertEquals(pExpectedSkewCenterX, this.getEntitySkewCenterX(pClass, pTag), pDelta);
+		Assert.assertEquals(pExpectedSkewCenterY, this.getEntitySkewCenterY(pClass, pTag), pDelta);
+	}
+
 	public void assertEntityColorRed(final float pExpectedColorRed, final Object pTag) {
 		Assert.assertEquals(pExpectedColorRed, this.getEntityColorRed(pTag));
 	}
@@ -294,6 +365,14 @@ public class AndEngineSolo extends Solo {
 		Assert.assertEquals(pExpectedColorAlpha, this.getEntityColorAlpha(pClass, pTag), pDelta);
 	}
 
+	public void assertEntityColor(final Color pExpectedColor, final Object pTag) {
+		Assert.assertEquals(pExpectedColor, this.getEntityColor(pTag));
+	}
+
+	public void assertEntityColor(final Color pExpectedColor, final Class<? extends IEntity> pClass, final Object pTag) {
+		Assert.assertEquals(pExpectedColor, this.getEntityColor(pClass, pTag));
+	}
+
 	public void assertEntityChildCount(final int pExpectedChildCount, final Object pTag) {
 		Assert.assertEquals(pExpectedChildCount, this.getEntityChildCount(pTag));
 	}
@@ -333,37 +412,78 @@ public class AndEngineSolo extends Solo {
 	public void assertEntityDetached(final Class<? extends IEntity> pClass, final Object pTag) {
 		Assert.assertFalse(this.getUniqueEntityByTag(pClass, pTag).hasParent());
 	}
-	
+
 	public void assertEntityChild(final Object pExpectedChildTag, final Object pTag) {
 		Assert.assertSame(this.getEntityParent(pExpectedChildTag), this.getUniqueEntityByTag(pTag));
 	}
-	
+
 	public void assertEntityChild(final int pIndex, final Object pExpectedChildTag, final Object pTag) {
 		Assert.assertSame(this.getUniqueEntityByTag(pExpectedChildTag), this.getEntityChild(pIndex, pTag));
 	}
-	
+
 	public void assertEntityChild(final Object pExpectedChildTag, final Class<? extends IEntity> pClass, final Object pTag) {
 		Assert.assertSame(this.getEntityParent(pExpectedChildTag), this.getUniqueEntityByTag(pClass, pTag));
 	}
-	
+
 	public void assertEntityChild(final int pIndex, final Object pExpectedChildTag, final Class<? extends IEntity> pClass, final Object pTag) {
 		Assert.assertSame(this.getUniqueEntityByTag(pExpectedChildTag), this.getEntityChild(pIndex, pClass, pTag));
 	}
-	
+
 	public void assertEntityChild(final Class<? extends IEntity> pExpectedChildClass, final Object pExpectedChildTag, final Object pTag) {
 		Assert.assertSame(this.getEntityParent(pExpectedChildClass, pExpectedChildTag), this.getUniqueEntityByTag(pTag));
 	}
-	
+
 	public void assertEntityChild(final int pIndex, final Class<? extends IEntity> pExpectedChildClass, final Object pExpectedChildTag, final Object pTag) {
 		Assert.assertSame(this.getUniqueEntityByTag(pExpectedChildClass, pExpectedChildTag), this.getEntityChild(pIndex, pTag));
 	}
-	
+
 	public void assertEntityChild(final Class<? extends IEntity> pExpectedChildClass, final Object pExpectedChildTag, final Class<? extends IEntity> pClass, final Object pTag) {
 		Assert.assertSame(this.getEntityParent(pExpectedChildClass, pExpectedChildTag), this.getUniqueEntityByTag(pClass, pTag));
 	}
 
 	public void assertEntityChild(final int pIndex, final Class<? extends IEntity> pExpectedChildClass, final Object pExpectedChildTag, final Class<? extends IEntity> pClass, final Object pTag) {
 		Assert.assertSame(this.getUniqueEntityByTag(pExpectedChildClass, pExpectedChildTag), this.getEntityChild(pIndex, pClass, pTag));
+	}
+
+	public void assertEntityCullingEnabled(final Object pTag) {
+		Assert.assertTrue(this.getUniqueEntityByTag(pTag).isCullingEnabled());
+	}
+
+	public void assertEntityCullingEnabled(final Class<? extends IEntity> pClass, final Object pTag) {
+		Assert.assertTrue(this.getUniqueEntityByTag(pClass, pTag).isCullingEnabled());
+	}
+
+	public void assertEntityCulled(final Camera pCamera, final Object pTag) {
+		Assert.assertTrue(this.getUniqueEntityByTag(pTag).isCulled(pCamera));
+	}
+
+	public void assertEntityCulled(final Camera pCamera, final Class<? extends IEntity> pClass, final Object pTag) {
+		Assert.assertTrue(this.getUniqueEntityByTag(pClass, pTag).isCulled(pCamera));
+	}
+
+
+	public void assertButtonSpriteEnabled(final Object pTag) {
+		Assert.assertTrue(this.isButtonSpriteEnabled(pTag));
+	}
+
+	public void assertButtonSpriteEnabled(final Class<? extends ButtonSprite> pClass, final Object pTag) {
+		Assert.assertTrue(this.isButtonSpriteEnabled(pClass, pTag));
+	}
+
+	public void assertButtonSpriteDisabled(final Object pTag) {
+		Assert.assertFalse(this.isButtonSpriteEnabled(pTag));
+	}
+
+	public void assertButtonSpriteDisabled(final Class<? extends ButtonSprite> pClass, final Object pTag) {
+		Assert.assertFalse(this.isButtonSpriteEnabled(pClass, pTag));
+	}
+
+	public void assertButtonSpriteState(final State pExpecedState, final Object pTag) {
+		Assert.assertEquals(pExpecedState, this.getButtonSpriteState(ButtonSprite.class, pTag));
+	}
+
+	public void assertButtonSpriteState(final State pExpecedState, final Class<? extends ButtonSprite> pClass, final Object pTag) {
+		Assert.assertEquals(pExpecedState, this.getButtonSpriteState(pClass, pTag));
 	}
 
 	// ===========================================================
@@ -540,6 +660,56 @@ public class AndEngineSolo extends Solo {
 		return result.getScaleCenterY();
 	}
 
+	public boolean isEntitySkewed(final Object pTag) {
+		return this.isEntitySkewed(IEntity.class, pTag);
+	}
+
+	public boolean isEntitySkewed(final Class<? extends IEntity> pClass, final Object pTag) {
+		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.isSkewed();
+	}
+
+	public float getEntitySkewX(final Object pTag) {
+		return this.getEntitySkewX(IEntity.class, pTag);
+	}
+
+	public float getEntitySkewX(final Class<? extends IEntity> pClass, final Object pTag) {
+		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.getSkewX();
+	}
+
+	public float getEntitySkewY(final Object pTag) {
+		return this.getEntitySkewY(IEntity.class, pTag);
+	}
+
+	public float getEntitySkewY(final Class<? extends IEntity> pClass, final Object pTag) {
+		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.getSkewY();
+	}
+
+	public float getEntitySkewCenterX(final Object pTag) {
+		return this.getEntitySkewCenterX(IEntity.class, pTag);
+	}
+
+	public float getEntitySkewCenterX(final Class<? extends IEntity> pClass, final Object pTag) {
+		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.getSkewCenterX();
+	}
+
+	public float getEntitySkewCenterY(final Object pTag) {
+		return this.getEntitySkewCenterX(IEntity.class, pTag);
+	}
+
+	public float getEntitySkewCenterY(final Class<? extends IEntity> pClass, final Object pTag) {
+		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.getSkewCenterY();
+	}
+
 	public float getEntityColorRed(final Object pTag) {
 		return this.getEntityColorRed(IEntity.class, pTag);
 	}
@@ -580,6 +750,16 @@ public class AndEngineSolo extends Solo {
 		return result.getAlpha();
 	}
 
+	public Color getEntityColor(final Object pTag) {
+		return this.getEntityColor(IEntity.class, pTag);
+	}
+
+	public Color getEntityColor(final Class<? extends IEntity> pClass, final Object pTag) {
+		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.getColor();
+	}
+
 	public int getEntityChildCount(final Object pTag) {
 		return this.getEntityChildCount(IEntity.class, pTag);
 	}
@@ -607,8 +787,50 @@ public class AndEngineSolo extends Solo {
 	public IEntity getEntityChild(final int pIndex, final Class<? extends IEntity> pClass, final Object pTag) {
 		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
 
-		return result.getChild(pIndex);
+		return result.getChildByIndex(pIndex);
 	}
+
+	public boolean isEntityCullingEnabled(final Object pTag) {
+		return this.isEntityCullingEnabled(IEntity.class, pTag);
+	}
+
+	public boolean isEntityCullingEnabled(final Class<? extends IEntity> pClass, final Object pTag) {
+		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.isCullingEnabled();
+	}
+
+	public boolean isEntityCulled(final Camera pCamera, final Object pTag) {
+		return this.isEntityCulled(pCamera, IEntity.class, pTag);
+	}
+
+	public boolean isEntityCulled(final Camera pCamera, final Class<? extends IEntity> pClass, final Object pTag) {
+		final IEntity result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.isCulled(pCamera);
+	}
+
+
+	public boolean isButtonSpriteEnabled(final Object pTag) {
+		return this.isButtonSpriteEnabled(ButtonSprite.class, pTag);
+	}
+
+	public boolean isButtonSpriteEnabled(final Class<? extends ButtonSprite> pClass, final Object pTag) {
+		final ButtonSprite result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.isEnabled();
+	}
+
+	public State getButtonSpriteState(final Object pTag) {
+		return this.getButtonSpriteState(ButtonSprite.class, pTag);
+	}
+
+	public State getButtonSpriteState(final Class<? extends ButtonSprite> pClass, final Object pTag) {
+		final ButtonSprite result = this.getUniqueEntityByTag(pClass, pTag);
+
+		return result.getState();
+	}
+
 
 	public void clickOnScene(final float pSceneX, final float pSceneY) {
 		final TouchEvent sceneTouchEvent = TouchEvent.obtain(pSceneX, pSceneY, TouchEvent.ACTION_DOWN, 0, null);
@@ -637,23 +859,19 @@ public class AndEngineSolo extends Solo {
 		touchController.onHandleMotionEvent(upEvent);
 	}
 
-	private IEntity getUniqueEntityByTag(final Object pTag) {
+	public IEntity getUniqueEntityByTag(final Object pTag) {
 		final ArrayList<IEntity> result = this.querySceneByTag(pTag);
 		this.assertListSize(1, result);
 		return result.get(0);
 	}
 
-	private IEntity getUniqueEntityByTag(final Class<? extends IEntity> pClass, final Object pTag) {
+	public <T extends IEntity> T getUniqueEntityByTag(final Class<T> pClass, final Object pTag) {
 		final ArrayList<IEntity> result = this.querySceneByTag(pClass, pTag);
 		this.assertListSize(1, result);
-		return result.get(0);
+		return pClass.cast(result.get(0));
 	}
 
-	private void assertListSize(final int pSize, final List<IEntity> pEntityList) {
-		Assert.assertEquals(pSize, pEntityList.size());
-	}
-
-	private ArrayList<IEntity> querySceneByTag(final Class<? extends IEntity> pClass, final Object pTag) {
+	public ArrayList<IEntity> querySceneByTag(final Class<? extends IEntity> pClass, final Object pTag) {
 		return this.getEngine().getScene().query(new IEntityMatcher() {
 			@Override
 			public boolean matches(final IEntity pEntity) {
@@ -662,13 +880,17 @@ public class AndEngineSolo extends Solo {
 		});
 	}
 
-	private ArrayList<IEntity> querySceneByTag(final Object pTag) {
+	public ArrayList<IEntity> querySceneByTag(final Object pTag) {
 		return this.getEngine().getScene().query(new IEntityMatcher() {
 			@Override
 			public boolean matches(final IEntity pEntity) {
 				return pTag.equals(pEntity.getUserData());
 			}
 		});
+	}
+
+	private void assertListSize(final int pSize, final List<IEntity> pEntityList) {
+		Assert.assertEquals(pSize, pEntityList.size());
 	}
 
 	// ===========================================================
